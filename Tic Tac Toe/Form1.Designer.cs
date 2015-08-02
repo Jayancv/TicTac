@@ -85,6 +85,7 @@
             this.p2Won = new System.Windows.Forms.Label();
             this.p2Def = new System.Windows.Forms.Label();
             this.highScore = new System.Windows.Forms.Panel();
+            this.BtnScoureClose = new System.Windows.Forms.Button();
             this.labMulScore = new System.Windows.Forms.Label();
             this.labSinScore = new System.Windows.Forms.Label();
             this.labSinName = new System.Windows.Forms.Label();
@@ -92,7 +93,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.BtnScoureClose = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -197,7 +197,7 @@
             // hihgestScoreToolStripMenuItem
             // 
             this.hihgestScoreToolStripMenuItem.Name = "hihgestScoreToolStripMenuItem";
-            this.hihgestScoreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.hihgestScoreToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.hihgestScoreToolStripMenuItem.Text = "Hihgest score";
             this.hihgestScoreToolStripMenuItem.Click += new System.EventHandler(this.hihgestScoreToolStripMenuItem_Click);
             // 
@@ -317,7 +317,6 @@
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.submit);
             this.panel1.Controls.Add(this.btnCancelP2);
@@ -326,7 +325,7 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(-1, 36);
+            this.panel1.Location = new System.Drawing.Point(32, 153);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(292, 162);
             this.panel1.TabIndex = 10;
@@ -344,7 +343,7 @@
             this.panel4.Controls.Add(this.textBox1);
             this.panel4.Controls.Add(this.label7);
             this.panel4.Controls.Add(this.label6);
-            this.panel4.Location = new System.Drawing.Point(23, 83);
+            this.panel4.Location = new System.Drawing.Point(31, 162);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(284, 158);
             this.panel4.TabIndex = 8;
@@ -504,8 +503,7 @@
             this.panel2.Controls.Add(this.singlePlayer);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.panel1);
-            this.panel2.Location = new System.Drawing.Point(23, 189);
+            this.panel2.Location = new System.Drawing.Point(32, 141);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(292, 162);
             this.panel2.TabIndex = 6;
@@ -691,11 +689,22 @@
             this.highScore.Visible = false;
             this.highScore.Paint += new System.Windows.Forms.PaintEventHandler(this.highScore_Paint);
             // 
+            // BtnScoureClose
+            // 
+            this.BtnScoureClose.BackColor = System.Drawing.Color.Gainsboro;
+            this.BtnScoureClose.Location = new System.Drawing.Point(77, 196);
+            this.BtnScoureClose.Name = "BtnScoureClose";
+            this.BtnScoureClose.Size = new System.Drawing.Size(75, 23);
+            this.BtnScoureClose.TabIndex = 8;
+            this.BtnScoureClose.Text = "Close";
+            this.BtnScoureClose.UseVisualStyleBackColor = false;
+            this.BtnScoureClose.Click += new System.EventHandler(this.BtnScoureClose_Click);
+            // 
             // labMulScore
             // 
             this.labMulScore.AutoSize = true;
             this.labMulScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labMulScore.Location = new System.Drawing.Point(152, 171);
+            this.labMulScore.Location = new System.Drawing.Point(140, 141);
             this.labMulScore.Name = "labMulScore";
             this.labMulScore.Size = new System.Drawing.Size(50, 16);
             this.labMulScore.TabIndex = 7;
@@ -705,7 +714,7 @@
             // 
             this.labSinScore.AutoSize = true;
             this.labSinScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labSinScore.Location = new System.Drawing.Point(39, 171);
+            this.labSinScore.Location = new System.Drawing.Point(39, 150);
             this.labSinScore.Name = "labSinScore";
             this.labSinScore.Size = new System.Drawing.Size(44, 16);
             this.labSinScore.TabIndex = 6;
@@ -715,7 +724,7 @@
             // 
             this.labSinName.AutoSize = true;
             this.labSinName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labSinName.Location = new System.Drawing.Point(36, 146);
+            this.labSinName.Location = new System.Drawing.Point(39, 118);
             this.labSinName.Name = "labSinName";
             this.labSinName.Size = new System.Drawing.Size(47, 16);
             this.labSinName.TabIndex = 5;
@@ -725,7 +734,7 @@
             // 
             this.labMulName.AutoSize = true;
             this.labMulName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labMulName.Location = new System.Drawing.Point(152, 142);
+            this.labMulName.Location = new System.Drawing.Point(140, 114);
             this.labMulName.Name = "labMulName";
             this.labMulName.Size = new System.Drawing.Size(35, 16);
             this.labMulName.TabIndex = 4;
@@ -735,7 +744,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Minion Pro", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(129, 107);
+            this.label14.Location = new System.Drawing.Point(121, 81);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(91, 22);
             this.label14.TabIndex = 2;
@@ -745,7 +754,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Minion Pro", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(15, 108);
+            this.label13.Location = new System.Drawing.Point(15, 81);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(95, 22);
             this.label13.TabIndex = 1;
@@ -761,27 +770,18 @@
             this.label12.TabIndex = 0;
             this.label12.Text = "HighScore";
             // 
-            // BtnScoureClose
-            // 
-            this.BtnScoureClose.BackColor = System.Drawing.Color.Gainsboro;
-            this.BtnScoureClose.Location = new System.Drawing.Point(77, 196);
-            this.BtnScoureClose.Name = "BtnScoureClose";
-            this.BtnScoureClose.Size = new System.Drawing.Size(75, 23);
-            this.BtnScoureClose.TabIndex = 8;
-            this.BtnScoureClose.Text = "Close";
-            this.BtnScoureClose.UseVisualStyleBackColor = false;
-            this.BtnScoureClose.Click += new System.EventHandler(this.BtnScoureClose_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 415);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.highScore);
             this.Controls.Add(this.p2Def);
             this.Controls.Add(this.p2Won);
             this.Controls.Add(this.p1Def);
             this.Controls.Add(this.p1Won);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
