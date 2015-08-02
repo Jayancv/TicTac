@@ -62,9 +62,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TxtNetName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -93,11 +91,15 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rServer = new System.Windows.Forms.RadioButton();
+            this.rClient = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.highScore.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -128,7 +130,7 @@
             this.playersToolStripMenuItem,
             this.singlePlayerToolStripMenuItem});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
-            this.modeToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.modeToolStripMenuItem.Text = "Mode";
             this.modeToolStripMenuItem.Click += new System.EventHandler(this.modeToolStripMenuItem_Click);
             // 
@@ -138,28 +140,28 @@
             this.networkToolStripMenuItem,
             this.normalToolStripMenuItem});
             this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
-            this.playersToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.playersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.playersToolStripMenuItem.Text = "2-Players";
             this.playersToolStripMenuItem.Click += new System.EventHandler(this.multi);
             // 
             // networkToolStripMenuItem
             // 
             this.networkToolStripMenuItem.Name = "networkToolStripMenuItem";
-            this.networkToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.networkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.networkToolStripMenuItem.Text = "Network";
             this.networkToolStripMenuItem.Click += new System.EventHandler(this.networkToolStripMenuItem_Click);
             // 
             // normalToolStripMenuItem
             // 
             this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.normalToolStripMenuItem.Text = "Normal";
             this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
             // 
             // singlePlayerToolStripMenuItem
             // 
             this.singlePlayerToolStripMenuItem.Name = "singlePlayerToolStripMenuItem";
-            this.singlePlayerToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.singlePlayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.singlePlayerToolStripMenuItem.Text = "Single Player";
             this.singlePlayerToolStripMenuItem.Click += new System.EventHandler(this.single);
             // 
@@ -325,7 +327,7 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(40, 10);
+            this.panel1.Location = new System.Drawing.Point(32, 153);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(292, 162);
             this.panel1.TabIndex = 10;
@@ -412,19 +414,17 @@
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.groupBox1);
             this.panel4.Controls.Add(this.button2);
             this.panel4.Controls.Add(this.button1);
-            this.panel4.Controls.Add(this.checkBox2);
-            this.panel4.Controls.Add(this.checkBox1);
-            this.panel4.Controls.Add(this.textBox1);
+            this.panel4.Controls.Add(this.TxtNetName);
             this.panel4.Controls.Add(this.label7);
             this.panel4.Controls.Add(this.label6);
-            this.panel4.Location = new System.Drawing.Point(7, 3);
+            this.panel4.Location = new System.Drawing.Point(31, 162);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(284, 158);
             this.panel4.TabIndex = 8;
             this.panel4.Visible = false;
-            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
             // button2
             // 
@@ -446,34 +446,12 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_2);
             // 
-            // checkBox2
+            // TxtNetName
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(123, 93);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(79, 17);
-            this.checkBox2.TabIndex = 4;
-            this.checkBox2.Text = "Player Two";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(11, 94);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(78, 17);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Player One";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(75, 50);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 20);
-            this.textBox1.TabIndex = 2;
+            this.TxtNetName.Location = new System.Drawing.Point(75, 50);
+            this.TxtNetName.Name = "TxtNetName";
+            this.TxtNetName.Size = new System.Drawing.Size(100, 20);
+            this.TxtNetName.TabIndex = 2;
             // 
             // label7
             // 
@@ -501,19 +479,16 @@
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.cancelP1);
             this.panel2.Controls.Add(this.submitP1);
             this.panel2.Controls.Add(this.singlePlayer);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.panel1);
             this.panel2.Location = new System.Drawing.Point(32, 141);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(292, 162);
             this.panel2.TabIndex = 6;
             this.panel2.Visible = false;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // cancelP1
             // 
@@ -749,43 +724,79 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Font = new System.Drawing.Font("Minion Pro", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(121, 81);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(101, 20);
+            this.label14.Size = new System.Drawing.Size(91, 22);
             this.label14.TabIndex = 2;
             this.label14.Text = "Multi Player";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Font = new System.Drawing.Font("Minion Pro", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(15, 81);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(113, 20);
+            this.label13.Size = new System.Drawing.Size(95, 22);
             this.label13.TabIndex = 1;
             this.label13.Text = "Single Player";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Font = new System.Drawing.Font("Adobe Fangsong Std R", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(56, 11);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(136, 29);
+            this.label12.Size = new System.Drawing.Size(128, 30);
             this.label12.TabIndex = 0;
             this.label12.Text = "HighScore";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBox1.Controls.Add(this.rClient);
+            this.groupBox1.Controls.Add(this.rServer);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupBox1.Location = new System.Drawing.Point(42, 77);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(170, 37);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            // 
+            // rServer
+            // 
+            this.rServer.AutoSize = true;
+            this.rServer.Location = new System.Drawing.Point(9, 14);
+            this.rServer.Name = "rServer";
+            this.rServer.Size = new System.Drawing.Size(56, 17);
+            this.rServer.TabIndex = 0;
+            this.rServer.TabStop = true;
+            this.rServer.Text = "Server";
+            this.rServer.UseVisualStyleBackColor = true;
+            // 
+            // rClient
+            // 
+            this.rClient.AutoSize = true;
+            this.rClient.Location = new System.Drawing.Point(101, 12);
+            this.rClient.Name = "rClient";
+            this.rClient.Size = new System.Drawing.Size(51, 17);
+            this.rClient.TabIndex = 1;
+            this.rClient.TabStop = true;
+            this.rClient.Text = "Client";
+            this.rClient.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 415);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.highScore);
             this.Controls.Add(this.p2Def);
             this.Controls.Add(this.p2Won);
             this.Controls.Add(this.p1Def);
             this.Controls.Add(this.p1Won);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -818,6 +829,8 @@
             this.panel2.PerformLayout();
             this.highScore.ResumeLayout(false);
             this.highScore.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -875,9 +888,7 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TxtNetName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
@@ -890,6 +901,9 @@
         private System.Windows.Forms.Label labSinScore;
         private System.Windows.Forms.Label labSinName;
         private System.Windows.Forms.Button BtnScoureClose;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton rClient;
+        private System.Windows.Forms.RadioButton rServer;
     }
 }
 

@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySQLClass;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Tic_Tac_Toe
 {
@@ -19,21 +19,29 @@ namespace Tic_Tac_Toe
     public partial class Form1 : MetroForm
     {
         //hostname,database,username,password,port
-        MySQLClient sqlClient = new MySQLClient("localhost", "tic", "root", "root", 3306); 
+        MySQLClient sqlClient = new MySQLClient("localhost", "tic", "root", "root", 3306);
 
         bool turn = true;                   //turn is true when x turn
         bool computer = true;               //default game is single player
         bool isNetwork = false;                     //set networking
+        bool isClient = false;
+        bool receive = false;
         bool playerSet = false;
         int turnCount = 0;
         String p, p1, p2;
-        String ServerOrClient;
         int[] board;                        //for score board
-        int ComWon=0;
+        int ComWon = 0;
         int youWon = 0;
-        Socket socket;
-        Thread t;
-       
+
+        //////////////
+        int i;
+        TcpListener server = new TcpListener(IPAddress.Any, 1980); // Creates a TCP Listener To Listen to Any IPAddress trying to connect to the program with port 1980
+        NetworkStream stream; //Creats a NetworkStream (used for sending and receiving data)
+        TcpClient client; // Creates a TCP Client
+        byte[] datalength = new byte[4]; // creates a new byte with length 4 ( used for receivng data's lenght)
+        //////////////
+
+
 
         //check
         public Form1()
@@ -42,7 +50,7 @@ namespace Tic_Tac_Toe
             p = "You";
             p1 = "Player 1";
             p2 = "Player 2";
-
+            rServer.Checked = true;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -56,66 +64,109 @@ namespace Tic_Tac_Toe
             MessageBox.Show("By jayan Vidanapathirana & Chamal Kuruppu", "Abot tic tac toe");
         }
 
-        public void getData()
-        {
-            if (ServerOrClient == "Server")
-            {
-                SynchronousSocketServer.getData(socket);
-            }
-            else
-            {
-                SynchronousSocketClient.getData(socket);
-            }
-        }
-
-        public bool placeMark(int row, int col)
-        {
-
-            // Make sure that row and column are in bounds of the board.
-            if ((row >= 0) && (row < 3))
-            {
-                if ((col >= 0) && (col < 3))
-                {
-
-                    if (ServerOrClient == "Server")
-                    {
-                        SynchronousSocketServer.IsWantToSendData = true;
-                        SynchronousSocketServer.SendData(socket, row.ToString() + "," + col.ToString());
-                        t = new Thread(getData);
-                        t.Start();
-                    }
-                    else
-                    {
-                        SynchronousSocketClient.IsWantToSendData = true;
-                        SynchronousSocketClient.sendData(socket, row.ToString() + "," + col.ToString());
-                        t = new Thread(getData);
-                        t.Start();
-                    }
-                    return true;
-                }
-                return false;
-              }
-            return false;
-            }
         //Button click method
-        private void btnClick(object sender, EventArgs e) 
+        private void btnClick(object sender, EventArgs e)
         {
-            Button b = (Button)sender;
-            if (turn == true)                //change button image
-                b.Text = "X";
-            else
-                b.Text = "O";
-            if()
-            turn = !turn;                    //change turn
-            b.Enabled = false;                
-            turnCount++;
-            checkWinner();
-            if ((!turn) && (computer) && (turnCount < 9))
-            {
-                computer_make_move();
-            }
+            btnClickFunction(sender);
         }
 
+        private void btnClickFunction(object sender)
+        {
+            if (isNetwork)
+            {          
+                Button b = (Button)sender;
+                if (turn == true && (!isClient)&&(turnCount == 0 || turnCount == 2 || turnCount == 4 || turnCount == 8 || turnCount == 6))
+                {              //change button image  
+                
+                    b.Text = "X";
+
+                    Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
+                    string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
+                    for (int j = 0; j < 9; j++)
+                    {
+                        try
+                        {
+                            if (check[j] == b.Name)
+                            {
+                                ServerSend(check[j]);
+                            }
+                        }
+                        catch { }
+                    }
+                    turn = !turn;                    //change turn
+                    b.Enabled = false;
+                    turnCount++;
+                    checkWinner();
+                    
+                }
+                else if (turn == false && (isClient) && (turnCount == 1 || turnCount == 3 || turnCount == 5 || turnCount == 7))
+                {
+                   // if (isClient) { btnEnable(false); }
+                    b.Text = "O";
+                    Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
+                    string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
+                    for (int j = 0; j < 9; j++)
+                    {
+                        try
+                        {
+                            if (check[j] == b.Name)
+                            {
+                               ClientSend(check[j]);
+                            }
+                        }
+                        catch { }
+                    }
+                    turn = !turn;                    //change turn
+                    b.Enabled = false;
+                    turnCount++;
+                    checkWinner();
+                    
+                }
+                else if (turn == true && (isClient) && (receive == true) && (turnCount == 0 || turnCount == 2 || turnCount == 4 || turnCount == 8 || turnCount == 6))
+                {
+                    b.Text = "X";
+                    turn = !turn;                    //change turn
+                    b.Enabled = false;
+                    turnCount++;
+                    receive =false;
+                    checkWinner();
+                }
+                else if (turn == false && (!isClient)&& (receive ==true) && (turnCount == 1 || turnCount == 3 || turnCount ==5 || turnCount == 7))
+                {
+                    b.Text = "O";
+                    turn = !turn;                    //change turn
+                    b.Enabled = false;
+                    turnCount++;
+                    receive = false;
+                    checkWinner();
+                }
+               
+              
+               
+            }
+            else
+            {
+                Button b = (Button)sender;
+                if (turn == true)
+                {              //change button image
+                    b.Text = "X";
+
+                }
+                else
+                {
+                    b.Text = "O";
+                }
+                turn = !turn;                    //change turn
+                b.Enabled = false;
+                turnCount++;
+                checkWinner();
+                if ((!turn) && (computer) && (turnCount < 9))
+                {
+                    computer_make_move();
+                }
+
+            }
+        }
         //check manually possible places
         private void checkWinner()
         {
@@ -146,23 +197,29 @@ namespace Tic_Tac_Toe
                 else
                     winner = "X";
 
-                if (computer && (winner == "O")) {                       //if computer won (Single palyer)
-                        
-
-                int defP = sqlClient.getScour("score", p, "defeat1");
+                if (computer && (winner == "O"))
+                {                       //if computer won (Single palyer)
+                    int defP = sqlClient.getScour("score", p, "defeat1");
                     defP = defP + 1;
                     sqlClient.Update(" score ", " defeat1=", defP, p);
-                    if (playerSet) {                       
+                    if (playerSet)
+                    {
                         setScoreBoard(p);
-                    }else {
-                        ComWon++;
-                        setScoreBoard(p, ComWon,youWon);
                     }
+                    else
+                    {
+                        ComWon++;
+                        setScoreBoard(p, ComWon, youWon);
+                    }
+
+
                     MessageBox.Show("Computer won the game !", "Winner");
-                } else {
+                }
+                else
+                {
                     if (computer)                                            //check single player or not
-                    { 
-                                                                            //single player Playe1/You won
+                    {
+                        //single player Playe1/You won
                         int wonP = sqlClient.getScour("score", p, "won1");
                         wonP = wonP + 1;
                         sqlClient.Update("score", "won1=", wonP, p);
@@ -175,7 +232,7 @@ namespace Tic_Tac_Toe
                             youWon++;
                             setScoreBoard(p, ComWon, youWon);
                         }
-                    
+
 
                         MessageBox.Show(p + " won the game !", "Winner");
 
@@ -211,13 +268,19 @@ namespace Tic_Tac_Toe
                     }
                 }
 
-            } else {                                         //no winners then,
-                if (turnCount == 9)   {                      //check turn Count, if it equals to 9 then game over & draw
-                        if (computer){                       //Single player mode
+            }
+            else
+            {                                         //no winners then,
+                if (turnCount == 9)
+                {                      //check turn Count, if it equals to 9 then game over & draw
+                    if (computer)
+                    {                       //Single player mode
                         int drwP = sqlClient.getScour("score", p, "draw1");
                         drwP = drwP + 1;
                         sqlClient.Update("score", "draw1=", drwP, p);
-                    }else {                                                       //multiplayer mode, change socres
+                    }
+                    else
+                    {                                                       //multiplayer mode, change socres
                         int drwP1 = sqlClient.getScour("score", p1, "draw2");
                         drwP1 = drwP1 + 1;
                         sqlClient.Update("score", "draw2=", drwP1, p1);
@@ -234,16 +297,16 @@ namespace Tic_Tac_Toe
         //set score Board values for single player
         private void setScoreBoard(string name1)
         {
-                board = sqlClient.Get("score", name1);
-                p1Won.Text = board[0].ToString();
-                p1Def.Text = board[2].ToString();
-                p2Won.Text = board[2].ToString();
-                p2Def.Text = board[0].ToString();
+            board = sqlClient.Get("score", name1);
+            p1Won.Text = board[0].ToString();
+            p1Def.Text = board[2].ToString();
+            p2Won.Text = board[2].ToString();
+            p2Def.Text = board[0].ToString();
 
         }
-        private void setScoreBoard(string name1, int com,int you)
+        private void setScoreBoard(string name1, int com, int you)
         {
-            p1Won.Text =you.ToString();
+            p1Won.Text = you.ToString();
             p1Def.Text = com.ToString();
             p2Won.Text = com.ToString();
             p2Def.Text = you.ToString();
@@ -270,7 +333,7 @@ namespace Tic_Tac_Toe
 
         }
 
-        
+
         private void mouse_Enter(object sender, EventArgs e)
         {
             Button b = (Button)sender;
@@ -305,7 +368,7 @@ namespace Tic_Tac_Toe
 
         private void multi(object sender, EventArgs e)
         {
-            
+
 
         }
 
@@ -502,24 +565,30 @@ namespace Tic_Tac_Toe
 
         private void newGame_Click(object sender, EventArgs e)
         {
-             turn = true;
+            newGame_ClickFuntion();
+        }
+
+        private void newGame_ClickFuntion()
+        {
+            turn = true;
             turnCount = 0;
             Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
-            if (playerSet) {
-            if (computer)
+            if (playerSet)
             {
-                boardS.Text = p;
-                boardM.Text = "Computer";
-                setScoreBoard(p);
+                if (computer)
+                {
+                    boardS.Text = p;
+                    boardM.Text = "Computer";
+                    setScoreBoard(p);
+                }
+                else
+                {
+                    boardS.Text = p1;
+                    boardM.Text = p2;
+                    setScoreBoard(p1, p2);
+                }
             }
-            else
-            {
-                boardS.Text = p1;
-                boardM.Text = p2;
-                setScoreBoard(p1, p2);
-            }
-            }
-           
+
             foreach (Button c in btns)
             {
                 try
@@ -532,6 +601,7 @@ namespace Tic_Tac_Toe
             //setScoreBoard(p);
             btnEnable(true);
         }
+
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
@@ -555,12 +625,14 @@ namespace Tic_Tac_Toe
                 p2 = player2.Text;
                 bool exist1 = sqlClient.Exist("score", p1);
                 bool exist2 = sqlClient.Exist("score", p2);
-                if (!exist1) {                                   //if player 1 not exist in database then insert to database
-                
+                if (!exist1)
+                {                                   //if player 1 not exist in database then insert to database
+
                     sqlClient.Insert("score", "name", p1);
                 }
-                if (!exist2) {                                    //if player 2 not exist in database then insert to database
-                
+                if (!exist2)
+                {                                    //if player 2 not exist in database then insert to database
+
                     sqlClient.Insert("score", "name", p2);
                 }
                 panel1.Visible = false;
@@ -575,11 +647,14 @@ namespace Tic_Tac_Toe
             if (singlePlayer.Text.Equals(""))
             {
                 panel2.Visible = true;
-            }  else  {
+            }
+            else
+            {
                 p = singlePlayer.Text;
                 bool exist = sqlClient.Exist("score", p);
 
-                if (!exist)  {                   //if player 1 not exist in database then insert to database
+                if (!exist)
+                {                   //if player 1 not exist in database then insert to database
                     sqlClient.Insert("score", "name", p);
                 }
                 panel2.Visible = false;
@@ -623,17 +698,16 @@ namespace Tic_Tac_Toe
 
         private void networkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-            isNetwork = true;                       //To know this is a networking game
-            computer = false;
+
+
             btnEnable(false);
-            panel4.Visible = true;
-            
+            panel4.Visible = true;                   //visible player panel
+
         }
 
         private void normalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //computer = false;
+            computer = false;
             btnEnable(false);
             panel1.Visible = true;
         }
@@ -661,22 +735,170 @@ namespace Tic_Tac_Toe
 
         private void button1_Click_2(object sender, EventArgs e)  //networking start
         {
-            panel4.Visible = false;
-            btnEnable(true);
-            if (checkBox1.Text.ToString() == "Player One")
+            if (TxtNetName.Text != "")
             {
-                ServerOrClient = "Server";
+                isNetwork = true;                       //To know this is a networking game
+                computer = false;
+                panel4.Visible = false;
+                //btnEnable(true);
+                if (rServer.Checked == true)
+                {
+                    turn = true;
+                    isClient = false;
+                    newGame_ClickFuntion();
+                    btnListen_Click(sender, e);
+
+                }
+                else
+                {
+                   turn = false;
+                    isClient = true;
+                    clientConect();
+                }
+
+
             }
-            else
-            {
-                ServerOrClient = "Client";
-            }
-            Console.WriteLine(ServerOrClient);
         }
+
+
+        private void btnListen_Click(object sender, EventArgs e)
+        {
+
+            server.Start(); // Starts Listening to Any IPAddress trying to connect to the program with port 1980
+            MessageBox.Show("Waiting For Connection");
+            new Thread(() => // Creates a New Thread (like a timer)
+            {
+                client = server.AcceptTcpClient(); //Waits for the Client To Connect
+               
+                MessageBox.Show("Connected To Client");
+                if (client.Connected) // If you are connected
+                {
+                    
+                    ServerReceive(); //Start Receiving
+                }
+            }).Start();
+        }
+
+        public void ServerReceive()
+        {
+            stream = client.GetStream(); //Gets The Stream of The Connection
+            new Thread(() => // Thread (like Timer)
+            {
+                while ((i = stream.Read(datalength, 0, 4)) != 0)//Keeps Trying to Receive the Size of the Message or Data
+                {
+                    // how to make a byte E.X byte[] examlpe = new byte[the size of the byte here] , i used BitConverter.ToInt32(datalength,0) cuz i received the length of the data in byte called datalength :D
+                    byte[] data = new byte[BitConverter.ToInt32(datalength, 0)]; // Creates a Byte for the data to be Received On
+                    stream.Read(data, 0, data.Length); //Receives The Real Data not the Size
+                    this.Invoke((MethodInvoker)delegate // To Write the Received data
+                    {
+                        receive = true;
+                        string btnTxt = Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
+                        Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
+                        string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
+                        for (int j = 0; j < 9; j++)
+                        {
+                            try
+                            {
+                                if (check[j] == btnTxt)
+                                {
+                                    btnClickFunction(btns[j]);
+                                }
+                            }
+                            catch { }
+                        }
+
+                    });
+                }
+            }).Start(); // Start the Thread
+
+        }
+
+
+
+        public void ServerSend(string msg)
+        {
+            stream = client.GetStream(); //Gets The Stream of The Connection
+            byte[] data; // creates a new byte without mentioning the size of it cuz its a byte used for sending
+            data = Encoding.Default.GetBytes(msg); // put the msg in the byte ( it automaticly uses the size of the msg )
+            int length = data.Length; // Gets the length of the byte data
+            byte[] datalength = new byte[4]; // Creates a new byte with length of 4
+            datalength = BitConverter.GetBytes(length); //put the length in a byte to send it
+            stream.Write(datalength, 0, 4); // sends the data's length
+            stream.Write(data, 0, data.Length); //Sends the real data
+        }
+
+
+        private void clientConect()
+        {
+            try
+            {
+                client = new TcpClient("127.0.0.1", 1980); //Trys to Connect
+                newGame_ClickFuntion();
+                ClientReceive(); //Starts Receiving When Connected
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message); // Error handler :D
+            }
+        }
+
+
+        public void ClientReceive()
+        {
+
+            stream = client.GetStream(); //Gets The Stream of The Connection
+            new Thread(() => // Thread (like Timer)
+            {
+                while ((i = stream.Read(datalength, 0, 4)) != 0)//Keeps Trying to Receive the Size of the Message or Data
+                {
+                    // how to make a byte E.X byte[] examlpe = new byte[the size of the byte here] , i used BitConverter.ToInt32(datalength,0) cuz i received the length of the data in byte called datalength :D
+                    byte[] data = new byte[BitConverter.ToInt32(datalength, 0)]; // Creates a Byte for the data to be Received On
+                    stream.Read(data, 0, data.Length); //Receives The Real Data not the Size
+                    this.Invoke((MethodInvoker)delegate // To Write the Received data
+                    {
+                        receive = true;
+                        string btntxt = Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
+                        Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
+                        string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
+                        for (int j = 0; j < 9; j++)
+                        {
+                            try
+                            {
+                                if (check[j] == btntxt)
+                                {
+                                    btnClickFunction(btns[j]);
+                                }
+                            }
+                            catch { }
+                        }
+                    
+                    });
+                }
+            }).Start(); // Start the Thread
+        }
+
+        public void ClientSend(string msg)
+        {
+            stream = client.GetStream(); //Gets The Stream of The Connection
+            byte[] data; // creates a new byte without mentioning the size of it cuz its a byte used for sending
+            data = Encoding.Default.GetBytes(msg); // put the msg in the byte ( it automaticly uses the size of the msg )
+            int length = data.Length; // Gets the length of the byte data
+            byte[] datalength = new byte[4]; // Creates a new byte with length of 4
+            datalength = BitConverter.GetBytes(length); //put the length in a byte to send it
+            stream.Write(datalength, 0, 4); // sends the data's length
+            stream.Write(data, 0, data.Length); //Sends the real data
+        }
+
+
+
+
+
+
+
 
         private void modeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newGame_Click(sender,e);
+            newGame_Click(sender, e);
         }
 
         private void label15_Click(object sender, EventArgs e)
@@ -695,7 +917,7 @@ namespace Tic_Tac_Toe
             labMulName.Text = array2[0];
             labMulScore.Text = array2[1];
             highScore.Visible = true;
-           // btnEnable(false);
+            btnEnable(false);
 
         }
 
@@ -707,12 +929,12 @@ namespace Tic_Tac_Toe
         private void BtnScoureClose_Click(object sender, EventArgs e)
         {
             highScore.Visible = false;
-
             // btnEnable(true);
         }
-       private void checkBox1_CheckedChanged(object sender, EventArgs e)
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            checkBox2.Visible = false;
+
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -720,17 +942,7 @@ namespace Tic_Tac_Toe
 
         }
 
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-     
 
     }
 

@@ -38,15 +38,3 @@ C:\Users\Jayan\Downloads\TicTac-master\Tic Tac Toe\obj\Debug\Tic Tac Toe.csprojR
 C:\Users\Jayan\Downloads\TicTac-master\Tic Tac Toe\obj\Debug\Tic_Tac_Toe.Form1.resources
 C:\Users\Jayan\Downloads\TicTac-master\Tic Tac Toe\obj\Debug\Tic_Tac_Toe.Properties.Resources.resources
 C:\Users\Jayan\Downloads\TicTac-master\Tic Tac Toe\obj\Debug\Tic Tac Toe.csproj.GenerateResource.Cache
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\bin\Debug\Tic Tac Toe.exe.config
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\obj\Debug\Tic Tac Toe.exe
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\obj\Debug\Tic Tac Toe.pdb
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\bin\Debug\Tic Tac Toe.exe
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\bin\Debug\Tic Tac Toe.pdb
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\obj\Debug\Tic Tac Toe.csprojResolveAssemblyReference.cache
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\obj\Debug\Tic_Tac_Toe.Form1.resources
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\obj\Debug\Tic_Tac_Toe.Properties.Resources.resources
-C:\Users\chamal kuruppu\Desktop\TicTac\Tic Tac Toe\obj\Debug\Tic Tac Toe.csproj.GenerateResource.Cache
-C:\Users\Jayan\Desktop\chamal\Tic Tac Toe\TicTac\Tic Tac Toe\bin\Debug\Tic Tac Toe.exe.config
-C:\Users\Jayan\Desktop\chamal\Tic Tac Toe\TicTac\Tic Tac Toe\obj\Debug\Tic Tac Toe.exe
-C:\Users\Jayan\Desktop\chamal\Tic Tac Toe\TicTac\Tic Tac Toe\obj\Debug\Tic Tac Toe.pdb
