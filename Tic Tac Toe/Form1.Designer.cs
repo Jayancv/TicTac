@@ -60,6 +60,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rClient = new System.Windows.Forms.RadioButton();
+            this.rServer = new System.Windows.Forms.RadioButton();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.TxtNetName = new System.Windows.Forms.TextBox();
@@ -91,15 +94,12 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rServer = new System.Windows.Forms.RadioButton();
-            this.rClient = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.highScore.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -130,7 +130,7 @@
             this.playersToolStripMenuItem,
             this.singlePlayerToolStripMenuItem});
             this.modeToolStripMenuItem.Name = "modeToolStripMenuItem";
-            this.modeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modeToolStripMenuItem.Size = new System.Drawing.Size(105, 22);
             this.modeToolStripMenuItem.Text = "Mode";
             this.modeToolStripMenuItem.Click += new System.EventHandler(this.modeToolStripMenuItem_Click);
             // 
@@ -140,28 +140,28 @@
             this.networkToolStripMenuItem,
             this.normalToolStripMenuItem});
             this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
-            this.playersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playersToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.playersToolStripMenuItem.Text = "2-Players";
             this.playersToolStripMenuItem.Click += new System.EventHandler(this.multi);
             // 
             // networkToolStripMenuItem
             // 
             this.networkToolStripMenuItem.Name = "networkToolStripMenuItem";
-            this.networkToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.networkToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.networkToolStripMenuItem.Text = "Network";
             this.networkToolStripMenuItem.Click += new System.EventHandler(this.networkToolStripMenuItem_Click);
             // 
             // normalToolStripMenuItem
             // 
             this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.normalToolStripMenuItem.Text = "Normal";
             this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
             // 
             // singlePlayerToolStripMenuItem
             // 
             this.singlePlayerToolStripMenuItem.Name = "singlePlayerToolStripMenuItem";
-            this.singlePlayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.singlePlayerToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.singlePlayerToolStripMenuItem.Text = "Single Player";
             this.singlePlayerToolStripMenuItem.Click += new System.EventHandler(this.single);
             // 
@@ -327,10 +327,10 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(32, 153);
+            this.panel1.Location = new System.Drawing.Point(13, 109);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(292, 162);
-            this.panel1.TabIndex = 10;
+            this.panel1.TabIndex = 7;
             this.panel1.Visible = false;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -420,15 +420,50 @@
             this.panel4.Controls.Add(this.TxtNetName);
             this.panel4.Controls.Add(this.label7);
             this.panel4.Controls.Add(this.label6);
-            this.panel4.Location = new System.Drawing.Point(31, 162);
+            this.panel4.Location = new System.Drawing.Point(15, 100);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(284, 158);
+            this.panel4.Size = new System.Drawing.Size(286, 167);
             this.panel4.TabIndex = 8;
             this.panel4.Visible = false;
+            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.groupBox1.Controls.Add(this.rClient);
+            this.groupBox1.Controls.Add(this.rServer);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.groupBox1.Location = new System.Drawing.Point(46, 77);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(170, 37);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            // 
+            // rClient
+            // 
+            this.rClient.AutoSize = true;
+            this.rClient.Location = new System.Drawing.Point(101, 12);
+            this.rClient.Name = "rClient";
+            this.rClient.Size = new System.Drawing.Size(51, 17);
+            this.rClient.TabIndex = 1;
+            this.rClient.TabStop = true;
+            this.rClient.Text = "Client";
+            this.rClient.UseVisualStyleBackColor = true;
+            // 
+            // rServer
+            // 
+            this.rServer.AutoSize = true;
+            this.rServer.Location = new System.Drawing.Point(9, 14);
+            this.rServer.Name = "rServer";
+            this.rServer.Size = new System.Drawing.Size(56, 17);
+            this.rServer.TabIndex = 0;
+            this.rServer.TabStop = true;
+            this.rServer.Text = "Server";
+            this.rServer.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(139, 120);
+            this.button2.Location = new System.Drawing.Point(178, 127);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -438,7 +473,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(11, 120);
+            this.button1.Location = new System.Drawing.Point(46, 131);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -448,17 +483,19 @@
             // 
             // TxtNetName
             // 
+            this.TxtNetName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TxtNetName.Location = new System.Drawing.Point(75, 50);
             this.TxtNetName.Name = "TxtNetName";
-            this.TxtNetName.Size = new System.Drawing.Size(100, 20);
+            this.TxtNetName.Size = new System.Drawing.Size(100, 22);
             this.TxtNetName.TabIndex = 2;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 55);
+            this.label7.Font = new System.Drawing.Font("Minion Pro", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(23, 51);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(35, 13);
+            this.label7.Size = new System.Drawing.Size(49, 22);
             this.label7.TabIndex = 1;
             this.label7.Text = "Name";
             // 
@@ -466,10 +503,11 @@
             // 
             this.label6.AutoSize = true;
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.Location = new System.Drawing.Point(75, 20);
+            this.label6.Font = new System.Drawing.Font("Minion Pro", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(42, 6);
             this.label6.MaximumSize = new System.Drawing.Size(10000, 1000);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(111, 15);
+            this.label6.Size = new System.Drawing.Size(185, 28);
             this.label6.TabIndex = 0;
             this.label6.Text = "Two Player - Network";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -484,7 +522,7 @@
             this.panel2.Controls.Add(this.singlePlayer);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Location = new System.Drawing.Point(32, 141);
+            this.panel2.Location = new System.Drawing.Point(19, 93);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(292, 162);
             this.panel2.TabIndex = 6;
@@ -552,7 +590,7 @@
             // 
             this.boardS.AutoSize = true;
             this.boardS.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.boardS.Location = new System.Drawing.Point(317, 122);
+            this.boardS.Location = new System.Drawing.Point(294, 122);
             this.boardS.Name = "boardS";
             this.boardS.Size = new System.Drawing.Size(35, 16);
             this.boardS.TabIndex = 13;
@@ -663,9 +701,9 @@
             this.highScore.Controls.Add(this.label14);
             this.highScore.Controls.Add(this.label13);
             this.highScore.Controls.Add(this.label12);
-            this.highScore.Location = new System.Drawing.Point(140, 109);
+            this.highScore.Location = new System.Drawing.Point(281, 97);
             this.highScore.Name = "highScore";
-            this.highScore.Size = new System.Drawing.Size(228, 238);
+            this.highScore.Size = new System.Drawing.Size(222, 254);
             this.highScore.TabIndex = 23;
             this.highScore.Visible = false;
             this.highScore.Paint += new System.Windows.Forms.PaintEventHandler(this.highScore_Paint);
@@ -673,7 +711,7 @@
             // BtnScoureClose
             // 
             this.BtnScoureClose.BackColor = System.Drawing.Color.Gainsboro;
-            this.BtnScoureClose.Location = new System.Drawing.Point(77, 196);
+            this.BtnScoureClose.Location = new System.Drawing.Point(72, 210);
             this.BtnScoureClose.Name = "BtnScoureClose";
             this.BtnScoureClose.Size = new System.Drawing.Size(75, 23);
             this.BtnScoureClose.TabIndex = 8;
@@ -740,6 +778,7 @@
             this.label13.Size = new System.Drawing.Size(95, 22);
             this.label13.TabIndex = 1;
             this.label13.Text = "Single Player";
+            this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
             // label12
             // 
@@ -751,40 +790,6 @@
             this.label12.TabIndex = 0;
             this.label12.Text = "HighScore";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.groupBox1.Controls.Add(this.rClient);
-            this.groupBox1.Controls.Add(this.rServer);
-            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.groupBox1.Location = new System.Drawing.Point(42, 77);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(170, 37);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            // 
-            // rServer
-            // 
-            this.rServer.AutoSize = true;
-            this.rServer.Location = new System.Drawing.Point(9, 14);
-            this.rServer.Name = "rServer";
-            this.rServer.Size = new System.Drawing.Size(56, 17);
-            this.rServer.TabIndex = 0;
-            this.rServer.TabStop = true;
-            this.rServer.Text = "Server";
-            this.rServer.UseVisualStyleBackColor = true;
-            // 
-            // rClient
-            // 
-            this.rClient.AutoSize = true;
-            this.rClient.Location = new System.Drawing.Point(101, 12);
-            this.rClient.Name = "rClient";
-            this.rClient.Size = new System.Drawing.Size(51, 17);
-            this.rClient.TabIndex = 1;
-            this.rClient.TabStop = true;
-            this.rClient.Text = "Client";
-            this.rClient.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -794,13 +799,13 @@
             this.Controls.Add(this.highScore);
             this.Controls.Add(this.p2Def);
             this.Controls.Add(this.p2Won);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.p1Def);
             this.Controls.Add(this.p1Won);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.boardM);
             this.Controls.Add(this.boardS);
@@ -825,12 +830,12 @@
             this.panel1.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.highScore.ResumeLayout(false);
             this.highScore.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

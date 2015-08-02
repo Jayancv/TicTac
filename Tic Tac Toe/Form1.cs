@@ -73,11 +73,11 @@ namespace Tic_Tac_Toe
         private void btnClickFunction(object sender)
         {
             if (isNetwork)
-            {          
+            {
                 Button b = (Button)sender;
-                if (turn == true && (!isClient)&&(turnCount == 0 || turnCount == 2 || turnCount == 4 || turnCount == 8 || turnCount == 6))
+                if (turn == true && (!isClient) && (turnCount == 0 || turnCount == 2 || turnCount == 4 || turnCount == 8 || turnCount == 6))
                 {              //change button image  
-                
+
                     b.Text = "X";
 
                     Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
@@ -97,11 +97,11 @@ namespace Tic_Tac_Toe
                     b.Enabled = false;
                     turnCount++;
                     checkWinner();
-                    
+
                 }
                 else if (turn == false && (isClient) && (turnCount == 1 || turnCount == 3 || turnCount == 5 || turnCount == 7))
                 {
-                   // if (isClient) { btnEnable(false); }
+                    // if (isClient) { btnEnable(false); }
                     b.Text = "O";
                     Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
                     string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
@@ -111,7 +111,7 @@ namespace Tic_Tac_Toe
                         {
                             if (check[j] == b.Name)
                             {
-                               ClientSend(check[j]);
+                                ClientSend(check[j]);
                             }
                         }
                         catch { }
@@ -120,7 +120,7 @@ namespace Tic_Tac_Toe
                     b.Enabled = false;
                     turnCount++;
                     checkWinner();
-                    
+
                 }
                 else if (turn == true && (isClient) && (receive == true) && (turnCount == 0 || turnCount == 2 || turnCount == 4 || turnCount == 8 || turnCount == 6))
                 {
@@ -128,10 +128,10 @@ namespace Tic_Tac_Toe
                     turn = !turn;                    //change turn
                     b.Enabled = false;
                     turnCount++;
-                    receive =false;
+                    receive = false;
                     checkWinner();
                 }
-                else if (turn == false && (!isClient)&& (receive ==true) && (turnCount == 1 || turnCount == 3 || turnCount ==5 || turnCount == 7))
+                else if (turn == false && (!isClient) && (receive == true) && (turnCount == 1 || turnCount == 3 || turnCount == 5 || turnCount == 7))
                 {
                     b.Text = "O";
                     turn = !turn;                    //change turn
@@ -140,9 +140,9 @@ namespace Tic_Tac_Toe
                     receive = false;
                     checkWinner();
                 }
-               
-              
-               
+
+
+
             }
             else
             {
@@ -211,8 +211,6 @@ namespace Tic_Tac_Toe
                         ComWon++;
                         setScoreBoard(p, ComWon, youWon);
                     }
-
-
                     MessageBox.Show("Computer won the game !", "Winner");
                 }
                 else
@@ -237,7 +235,7 @@ namespace Tic_Tac_Toe
                         MessageBox.Show(p + " won the game !", "Winner");
 
                     }
-                    else                                                      //Multiplayer  mode win
+                    else if(!isNetwork)                                                      //Multiplayer  mode win
                     {
 
                         if (winner == "X")
@@ -260,6 +258,36 @@ namespace Tic_Tac_Toe
                             defP1 = defP1 + 1;
                             sqlClient.Update("score", "defeat2=", defP1, p1);
 
+                            MessageBox.Show(p2 + " won the game !", "Winner");
+                        }
+                        setScoreBoard(p1, p2);
+
+
+                    }
+                    else if (isNetwork)
+                    {
+                        if (winner == "X")
+                        {
+                            if (!isClient) { 
+                            int wonP1 = sqlClient.getScour("score", p1, "won2");
+                            wonP1 = wonP1 + 1;
+                            sqlClient.Update("score", "won2=", wonP1, p1);
+                            int defP2 = sqlClient.getScour("score", p2, "defeat2");
+                            defP2 = defP2 + 1;
+                            sqlClient.Update("score", "defeat2=", defP2, p2);
+                            }
+                            MessageBox.Show(p1 + " won the game !", "Winner");
+                        }
+                        else
+                        {
+                            if (isClient) { 
+                            int wonP2 = sqlClient.getScour("score", p2, "won2");
+                            wonP2 = wonP2 + 1;
+                            sqlClient.Update("score", "won2=", wonP2, p2);
+                            int defP1 = sqlClient.getScour("score", p1, "defeat2");
+                            defP1 = defP1 + 1;
+                            sqlClient.Update("score", "defeat2=", defP1, p1);
+                            }
                             MessageBox.Show(p2 + " won the game !", "Winner");
                         }
                         setScoreBoard(p1, p2);
@@ -627,12 +655,10 @@ namespace Tic_Tac_Toe
                 bool exist2 = sqlClient.Exist("score", p2);
                 if (!exist1)
                 {                                   //if player 1 not exist in database then insert to database
-
                     sqlClient.Insert("score", "name", p1);
                 }
                 if (!exist2)
-                {                                    //if player 2 not exist in database then insert to database
-
+               {                                    //if player 2 not exist in database then insert to database
                     sqlClient.Insert("score", "name", p2);
                 }
                 panel1.Visible = false;
@@ -739,20 +765,34 @@ namespace Tic_Tac_Toe
             {
                 isNetwork = true;                       //To know this is a networking game
                 computer = false;
+                playerSet = true;
                 panel4.Visible = false;
                 //btnEnable(true);
                 if (rServer.Checked == true)
                 {
                     turn = true;
                     isClient = false;
+                    p1 = TxtNetName.Text;
+                    bool exist1 = sqlClient.Exist("score", p1);
+                    if (!exist1)
+                    {                                   //if player 1 not exist in database then insert to database
+                        sqlClient.Insert("score", "name", p1);
+                    }
                     newGame_ClickFuntion();
                     btnListen_Click(sender, e);
 
                 }
                 else
                 {
-                   turn = false;
+                    turn = false;
                     isClient = true;
+                    playerSet = true;
+                    bool exist1 = sqlClient.Exist("score", p1);
+                    if (!exist1)
+                    {                                   //if player 1 not exist in database then insert to database
+                        sqlClient.Insert("score", "name", p1);
+                    }
+                    p2 = TxtNetName.Text;
                     clientConect();
                 }
 
@@ -769,18 +809,22 @@ namespace Tic_Tac_Toe
             new Thread(() => // Creates a New Thread (like a timer)
             {
                 client = server.AcceptTcpClient(); //Waits for the Client To Connect
-               
+
                 MessageBox.Show("Connected To Client");
                 if (client.Connected) // If you are connected
                 {
-                    
+
                     ServerReceive(); //Start Receiving
+                    //ServerSend(p1);
+                    //setScoreBoard(p1, p2);
                 }
             }).Start();
+            
         }
 
         public void ServerReceive()
         {
+            bool isBtn = false;
             stream = client.GetStream(); //Gets The Stream of The Connection
             new Thread(() => // Thread (like Timer)
             {
@@ -802,9 +846,16 @@ namespace Tic_Tac_Toe
                                 if (check[j] == btnTxt)
                                 {
                                     btnClickFunction(btns[j]);
+                                    isBtn = true;
                                 }
                             }
                             catch { }
+                        }
+                        if (!isBtn)
+                        {
+                            p2 = btnTxt;
+                            ServerSend(p1);
+                            newGame_ClickFuntion();
                         }
 
                     });
@@ -833,8 +884,13 @@ namespace Tic_Tac_Toe
             try
             {
                 client = new TcpClient("127.0.0.1", 1980); //Trys to Connect
-                newGame_ClickFuntion();
+               
+                
+               
                 ClientReceive(); //Starts Receiving When Connected
+                ClientSend(p2);
+                
+                //setScoreBoard(p1, p2);
             }
             catch (Exception ex)
             {
@@ -845,7 +901,7 @@ namespace Tic_Tac_Toe
 
         public void ClientReceive()
         {
-
+            bool isBtn = false;
             stream = client.GetStream(); //Gets The Stream of The Connection
             new Thread(() => // Thread (like Timer)
             {
@@ -867,11 +923,16 @@ namespace Tic_Tac_Toe
                                 if (check[j] == btntxt)
                                 {
                                     btnClickFunction(btns[j]);
+                                    isBtn = true;
                                 }
                             }
                             catch { }
+                        } if (!isBtn)
+                        {
+                            p1 = btntxt;
+                            newGame_ClickFuntion();
                         }
-                    
+
                     });
                 }
             }).Start(); // Start the Thread
@@ -938,6 +999,16 @@ namespace Tic_Tac_Toe
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
         {
 
         }
