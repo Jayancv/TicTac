@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySQLClass;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace Tic_Tac_Toe
 {
@@ -24,9 +27,12 @@ namespace Tic_Tac_Toe
         bool playerSet = false;
         int turnCount = 0;
         String p, p1, p2;
+        String ServerOrClient;
         int[] board;                        //for score board
         int ComWon=0;
         int youWon = 0;
+        Socket socket;
+        Thread t;
        
 
         //check
@@ -50,6 +56,47 @@ namespace Tic_Tac_Toe
             MessageBox.Show("By jayan Vidanapathirana & Chamal Kuruppu", "Abot tic tac toe");
         }
 
+        public void getData()
+        {
+            if (ServerOrClient == "Server")
+            {
+                SynchronousSocketServer.getData(socket);
+            }
+            else
+            {
+                SynchronousSocketClient.getData(socket);
+            }
+        }
+
+        public bool placeMark(int row, int col)
+        {
+
+            // Make sure that row and column are in bounds of the board.
+            if ((row >= 0) && (row < 3))
+            {
+                if ((col >= 0) && (col < 3))
+                {
+
+                    if (ServerOrClient == "Server")
+                    {
+                        SynchronousSocketServer.IsWantToSendData = true;
+                        SynchronousSocketServer.SendData(socket, row.ToString() + "," + col.ToString());
+                        t = new Thread(getData);
+                        t.Start();
+                    }
+                    else
+                    {
+                        SynchronousSocketClient.IsWantToSendData = true;
+                        SynchronousSocketClient.sendData(socket, row.ToString() + "," + col.ToString());
+                        t = new Thread(getData);
+                        t.Start();
+                    }
+                    return true;
+                }
+                return false;
+              }
+            return false;
+            }
         //Button click method
         private void btnClick(object sender, EventArgs e) 
         {
@@ -58,6 +105,7 @@ namespace Tic_Tac_Toe
                 b.Text = "X";
             else
                 b.Text = "O";
+            if()
             turn = !turn;                    //change turn
             b.Enabled = false;                
             turnCount++;
@@ -99,7 +147,9 @@ namespace Tic_Tac_Toe
                     winner = "X";
 
                 if (computer && (winner == "O")) {                       //if computer won (Single palyer)
-                    int defP = sqlClient.getScour("score", p, "defeat1");
+                        
+
+                int defP = sqlClient.getScour("score", p, "defeat1");
                     defP = defP + 1;
                     sqlClient.Update(" score ", " defeat1=", defP, p);
                     if (playerSet) {                       
@@ -108,8 +158,6 @@ namespace Tic_Tac_Toe
                         ComWon++;
                         setScoreBoard(p, ComWon,youWon);
                     }
-                    
-
                     MessageBox.Show("Computer won the game !", "Winner");
                 } else {
                     if (computer)                                            //check single player or not
@@ -615,6 +663,15 @@ namespace Tic_Tac_Toe
         {
             panel4.Visible = false;
             btnEnable(true);
+            if (checkBox1.Text.ToString() == "Player One")
+            {
+                ServerOrClient = "Server";
+            }
+            else
+            {
+                ServerOrClient = "Client";
+            }
+            Console.WriteLine(ServerOrClient);
         }
 
         private void modeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -650,7 +707,27 @@ namespace Tic_Tac_Toe
         private void BtnScoureClose_Click(object sender, EventArgs e)
         {
             highScore.Visible = false;
-           // btnEnable(true);
+
+            // btnEnable(true);
+        }
+       private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBox2.Visible = false;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
      
