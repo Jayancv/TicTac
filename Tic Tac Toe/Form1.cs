@@ -633,7 +633,7 @@ namespace Tic_Tac_Toe
 
         private void normalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            computer = false;
+            //computer = false;
             btnEnable(false);
             panel1.Visible = true;
         }
