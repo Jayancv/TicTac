@@ -94,8 +94,6 @@
     <Compile Include="MySQLClient.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SynchronousSocketClient.cs" />
-    <Compile Include="SynchronousSocketServer.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

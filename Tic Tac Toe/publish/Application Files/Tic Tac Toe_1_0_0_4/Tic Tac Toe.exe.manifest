@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="Tic Tac Toe.exe" version="1.0.0.3" publicKeyToken="0bc91f3b86d7c5f1" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="Tic Tac Toe.exe" version="1.0.0.4" publicKeyToken="0bc91f3b86d7c5f1" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
     <assemblyIdentity name="Tic Tac Toe" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
@@ -42,11 +42,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-      <assemblyIdentity name="MySql.Data" version="6.9.6.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetroFramework.dll" size="321024">
       <assemblyIdentity name="MetroFramework" version="1.3.0.0" publicKeyToken="5F91A84759BF584A" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -83,14 +78,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Tic Tac Toe.exe" size="45568">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="391873">
+      <assemblyIdentity name="MySql.Data" version="6.6.5.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>7ikHExOJZzudKLzy+S1MQiqbyHSkcsCjJ1mw6JoxCtc=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Tic Tac Toe.exe" size="43520">
       <assemblyIdentity name="Tic Tac Toe" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>R95MZMtCwcIA8tcXSO+b1/lbvgCk2ohsngLFdtloDZE=</dsig:DigestValue>
+        <dsig:DigestValue>Q0QbpyH2ap7wKlVDKXaGLSFcZzHwFMtAFkZ3ZGxJcj0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -103,4 +110,4 @@
       <dsig:DigestValue>PbQiHFOih9uz3RPvvsStiPKcsu3PE8/gyCn2QGUyyf4=</dsig:DigestValue>
     </hash>
   </file>
-<publisherIdentity name="CN=chootas-pc\Jayan" issuerKeyHash="160d6e7459a696f2269ba89804a0e99470e31f81" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>Y7Ayfphhw5n0WCtBpjQOIUGQicNVKBQaMKwkNzb8qkA=</DigestValue></Reference></SignedInfo><SignatureValue>PQRHCaL8mGkItKR5q0LsMIKGZY7+Do1LX7Tx866/XNRRt6KEi0QTobtQeuP2CD+KMWxAZlRd0MfMAwnGh51EQh5N1ZucTA2Zz+gz2armSwMSq22+dAbpFDt3KRvbcytlxtTKCde5zRfSdFwF/UBlKB+I1DmpNYNfBE2lqS7yQdk=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>1cB0QXWehClRLNcgfwUNbBX28R43OcStjsw2XX3G6B01QCoWOnX2QzP3V+ezthtvQQeZRe9cfAJ6Z7sMP3La6JYYI8IualJInk/JpRI4LDQ9FIP18WlhMEmpDmSXfoIu1TONnLOCQTLi0bqp8EOqCMiYI+FeBcGND41wuMvF7Ps=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="40aafc363724ac301a142855c3899041210e34a6412b58f499c361987e32b063" Description="" Url=""><as:assemblyIdentity name="Tic Tac Toe.exe" version="1.0.0.3" publicKeyToken="0bc91f3b86d7c5f1" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=chootas-pc\Jayan</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>5GYjUFsB3ESQH1vNpaloZhqn+81Ld5ttieLdtvLuBCE=</DigestValue></Reference></SignedInfo><SignatureValue>RztzWE8IIz6FKuZpJVZGowETnFcA6AoCMT7KGxSQQ0JJX5g39+/CWrchSZ7Umu1XsrEdTiqcLH79L4OrOupsHc/CdakMP1aTqlU4pAEBc3B4PjiIlEB57KsuzebNSA09ihSPdY2X49yfX+xk5Qp6QFUs3kE1638sK3tUG1SloAU=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>1cB0QXWehClRLNcgfwUNbBX28R43OcStjsw2XX3G6B01QCoWOnX2QzP3V+ezthtvQQeZRe9cfAJ6Z7sMP3La6JYYI8IualJInk/JpRI4LDQ9FIP18WlhMEmpDmSXfoIu1TONnLOCQTLi0bqp8EOqCMiYI+FeBcGND41wuMvF7Ps=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQfVB+6z/7KKJI8ME4yc0OcDANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDHiAAYwBoAG8AbwB0AGEAcwAtAHAAYwBcAEoAYQB5AGEAbjAeFw0xNTA4MDMwNjE3MDVaFw0xNjA4MDIxMjE3MDVaMCsxKTAnBgNVBAMeIABjAGgAbwBvAHQAYQBzAC0AcABjAFwASgBhAHkAYQBuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDVwHRBdZ6EKVEs1yB/BQ1sFfbxHjc5xK2OzDZdfcboHTVAKhY6dfZDM/dX57O2G29BB5lF71x8Anpnuww/ctrolhgjwi5qUkieT8mlEjgsND0Ug/XxaWEwSakOZJd+gi7VM42cs4JBMuLRuqnwQ6oIyJgj4V4FwY0PjXC4y8Xs+wIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAMMymYJvpUMjDWOOkj6cch5YWeIUOEkxcRUr2cbAXVaPUWf/uBamDVui82G4jrteBMeWgVV/ijmdM2k2RWtyNxcNSHuxzVCIErEQAC0ArK2D88F8PEq5yIaHgSiykfQREVve1mNIuAt6wbR7j0DASoFuYsu+CeW06YjHOYZlt7/J</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=chootas-pc\Jayan" issuerKeyHash="160d6e7459a696f2269ba89804a0e99470e31f81" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>q5ppxv0big9hwSGGEj2q95qAV99/NW/AnuL9HPi9uBQ=</DigestValue></Reference></SignedInfo><SignatureValue>Snh4H2VSwPi42+Y0jkpe0R4lDHGwsZPE0IapJrj351wH0jO8F5a5TXPB4Yw5NC+0J3QHtpUL8ymBzfTlzeAJitix7l5apulkV6gjIAriJpWUSzY9EcMIllUU68Fzucrz0Mogak5hSVbaGTuZKW2Qw21AWPWMI6xMRRyAPAsVm6k=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>1cB0QXWehClRLNcgfwUNbBX28R43OcStjsw2XX3G6B01QCoWOnX2QzP3V+ezthtvQQeZRe9cfAJ6Z7sMP3La6JYYI8IualJInk/JpRI4LDQ9FIP18WlhMEmpDmSXfoIu1TONnLOCQTLi0bqp8EOqCMiYI+FeBcGND41wuMvF7Ps=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="14b8bdf81cfde29ec06f357fdf57809af7aa3d128621c1610f8a1bfdc6699aab" Description="" Url=""><as:assemblyIdentity name="Tic Tac Toe.exe" version="1.0.0.4" publicKeyToken="0bc91f3b86d7c5f1" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=chootas-pc\Jayan</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>hKbthoVyKt3bmP3z2lYhHw30WMxxcGcOMr+6M9ZD8kE=</DigestValue></Reference></SignedInfo><SignatureValue>QiZuHB+jGqujnKoyltPuz50GAU3/KaCpkqepejG56+BKsYYKfCn4q4KsFlU043UhKz//JQjQIAsk9141x6j9XuULHW+rBphvII+vVj4+kY1ul73m/o4H9W4v9DoDQTVaDbHIpFB3r2fqcVdIpSUd26PbXQFb+2K3wsNgWFTgZvU=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>1cB0QXWehClRLNcgfwUNbBX28R43OcStjsw2XX3G6B01QCoWOnX2QzP3V+ezthtvQQeZRe9cfAJ6Z7sMP3La6JYYI8IualJInk/JpRI4LDQ9FIP18WlhMEmpDmSXfoIu1TONnLOCQTLi0bqp8EOqCMiYI+FeBcGND41wuMvF7Ps=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB2TCCAUKgAwIBAgIQfVB+6z/7KKJI8ME4yc0OcDANBgkqhkiG9w0BAQsFADArMSkwJwYDVQQDHiAAYwBoAG8AbwB0AGEAcwAtAHAAYwBcAEoAYQB5AGEAbjAeFw0xNTA4MDMwNjE3MDVaFw0xNjA4MDIxMjE3MDVaMCsxKTAnBgNVBAMeIABjAGgAbwBvAHQAYQBzAC0AcABjAFwASgBhAHkAYQBuMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDVwHRBdZ6EKVEs1yB/BQ1sFfbxHjc5xK2OzDZdfcboHTVAKhY6dfZDM/dX57O2G29BB5lF71x8Anpnuww/ctrolhgjwi5qUkieT8mlEjgsND0Ug/XxaWEwSakOZJd+gi7VM42cs4JBMuLRuqnwQ6oIyJgj4V4FwY0PjXC4y8Xs+wIDAQABMA0GCSqGSIb3DQEBCwUAA4GBAMMymYJvpUMjDWOOkj6cch5YWeIUOEkxcRUr2cbAXVaPUWf/uBamDVui82G4jrteBMeWgVV/ijmdM2k2RWtyNxcNSHuxzVCIErEQAC0ArK2D88F8PEq5yIaHgSiykfQREVve1mNIuAt6wbR7j0DASoFuYsu+CeW06YjHOYZlt7/J</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
