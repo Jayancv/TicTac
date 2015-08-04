@@ -804,19 +804,18 @@ namespace Tic_Tac_Toe
         private void btnListen_Click(object sender, EventArgs e)
         {
 
-            server.Start(); // Starts Listening to Any IPAddress trying to connect to the program with port 1980
+            server.Start();                         // Starts Listening to Any IPAddress trying to connect to the program with port 1980
             MessageBox.Show("Waiting For Connection");
-            new Thread(() => // Creates a New Thread (like a timer)
+            new Thread(() =>                       // Creates a New Thread (like a timer)
             {
                 client = server.AcceptTcpClient(); //Waits for the Client To Connect
 
                 MessageBox.Show("Connected To Client");
-                if (client.Connected) // If you are connected
+                if (client.Connected)             // If you are connected
                 {
 
                     ServerReceive(); //Start Receiving
-                    //ServerSend(p1);
-                    //setScoreBoard(p1, p2);
+                   
                 }
             }).Start();
             
@@ -828,38 +827,44 @@ namespace Tic_Tac_Toe
             stream = client.GetStream(); //Gets The Stream of The Connection
             new Thread(() => // Thread (like Timer)
             {
-                while ((i = stream.Read(datalength, 0, 4)) != 0)//Keeps Trying to Receive the Size of the Message or Data
+                try
                 {
-                    // how to make a byte E.X byte[] examlpe = new byte[the size of the byte here] , i used BitConverter.ToInt32(datalength,0) cuz i received the length of the data in byte called datalength :D
-                    byte[] data = new byte[BitConverter.ToInt32(datalength, 0)]; // Creates a Byte for the data to be Received On
-                    stream.Read(data, 0, data.Length); //Receives The Real Data not the Size
-                    this.Invoke((MethodInvoker)delegate // To Write the Received data
+                    while ((i = stream.Read(datalength, 0, 4)) != 0)//Keeps Trying to Receive the Size of the Message or Data
                     {
-                        receive = true;
-                        string btnTxt = Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
-                        Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
-                        string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
-                        for (int j = 0; j < 9; j++)
+                        // how to make a byte E.X byte[] examlpe = new byte[the size of the byte here] , i used BitConverter.ToInt32(datalength,0) cuz i received the length of the data in byte called datalength :D
+                        byte[] data = new byte[BitConverter.ToInt32(datalength, 0)]; // Creates a Byte for the data to be Received On
+                        stream.Read(data, 0, data.Length); //Receives The Real Data not the Size
+                        this.Invoke((MethodInvoker)delegate // To Write the Received data
                         {
-                            try
-                            {
-                                if (check[j] == btnTxt)
-                                {
-                                    btnClickFunction(btns[j]);
-                                    isBtn = true;
-                                }
-                            }
-                            catch { }
-                        }
-                        if (!isBtn)
-                        {
-                            p2 = btnTxt;
-                            ServerSend(p1);
-                            newGame_ClickFuntion();
-                        }
 
-                    });
+                            string btnTxt = Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
+                            Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
+                            string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
+                            for (int j = 0; j < 9; j++)
+                            {
+                                try
+                                {
+                                    if (check[j] == btnTxt)
+                                    {
+                                        isBtn = true;
+                                        receive = true;
+                                        btnClickFunction(btns[j]);
+
+                                    }
+                                }
+                                catch { }
+                            }
+                            if (!isBtn)
+                            {
+                                p2 = btnTxt;
+                                ServerSend(p1);
+                                newGame_ClickFuntion();
+                            }
+
+                        });
+                    }
                 }
+                catch (System.IO.IOException x) { }
             }).Start(); // Start the Thread
 
         }
@@ -905,6 +910,7 @@ namespace Tic_Tac_Toe
             stream = client.GetStream(); //Gets The Stream of The Connection
             new Thread(() => // Thread (like Timer)
             {
+                try { 
                 while ((i = stream.Read(datalength, 0, 4)) != 0)//Keeps Trying to Receive the Size of the Message or Data
                 {
                     // how to make a byte E.X byte[] examlpe = new byte[the size of the byte here] , i used BitConverter.ToInt32(datalength,0) cuz i received the length of the data in byte called datalength :D
@@ -912,7 +918,7 @@ namespace Tic_Tac_Toe
                     stream.Read(data, 0, data.Length); //Receives The Real Data not the Size
                     this.Invoke((MethodInvoker)delegate // To Write the Received data
                     {
-                        receive = true;
+                        
                         string btntxt = Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
                         Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
                         string[] check = new string[9] { "A1", "A2", "A3", "B1", "B2", "B3", "C1", "C2", "C3" };
@@ -922,8 +928,10 @@ namespace Tic_Tac_Toe
                             {
                                 if (check[j] == btntxt)
                                 {
-                                    btnClickFunction(btns[j]);
                                     isBtn = true;
+                                    receive = true;
+                                    btnClickFunction(btns[j]);
+                                    
                                 }
                             }
                             catch { }
@@ -935,6 +943,8 @@ namespace Tic_Tac_Toe
 
                     });
                 }
+                }
+                catch (System.IO.IOException x) { }
             }).Start(); // Start the Thread
         }
 
@@ -1013,10 +1023,50 @@ namespace Tic_Tac_Toe
 
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
 
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
 
+            // Confirm user wants to close
+            switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo))
+            {
+                case DialogResult.No:
+                    e.Cancel = true;
+                    break;
+                default:
+                    
+                    server.Stop();
+                    client.Close();
+                    MessageBox.Show("Connection will close");
+                    break;
+            }
+        }
+        private void Form1_FormClosing(Object sender, FormClosingEventArgs e)
+        {
+
+            System.Text.StringBuilder messageBoxCS = new System.Text.StringBuilder();
+            messageBoxCS.AppendFormat("{0} = {1}", "CloseReason", e.CloseReason);
+            messageBoxCS.AppendLine();
+            if (isClient)
+            {
+                client.Close();
+                server.Stop();
+            }
+            else
+            {
+                server.Stop();
+                client.Close();
+                
+            }
+                
+            messageBoxCS.AppendFormat("{0} = {1}", "Cancel", e.Cancel);
+            messageBoxCS.AppendLine();
+            MessageBox.Show(messageBoxCS.ToString(), "FormClosing Event");
+        }
     }
 
-
+   
 
 }
