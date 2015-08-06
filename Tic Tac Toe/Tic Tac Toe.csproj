@@ -60,6 +60,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>dll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework">
       <HintPath>..\..\..\..\..\Downloads\TickTackToev1.0_Server\TickTackToev1.0\TickTackToev1.0\bin\Debug\MetroFramework.dll</HintPath>
     </Reference>

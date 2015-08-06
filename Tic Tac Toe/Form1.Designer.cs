@@ -723,7 +723,7 @@
             // 
             this.labMulScore.AutoSize = true;
             this.labMulScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labMulScore.Location = new System.Drawing.Point(140, 141);
+            this.labMulScore.Location = new System.Drawing.Point(140, 148);
             this.labMulScore.Name = "labMulScore";
             this.labMulScore.Size = new System.Drawing.Size(50, 16);
             this.labMulScore.TabIndex = 7;
@@ -753,7 +753,7 @@
             // 
             this.labMulName.AutoSize = true;
             this.labMulName.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labMulName.Location = new System.Drawing.Point(140, 114);
+            this.labMulName.Location = new System.Drawing.Point(140, 120);
             this.labMulName.Name = "labMulName";
             this.labMulName.Size = new System.Drawing.Size(35, 16);
             this.labMulName.TabIndex = 4;
