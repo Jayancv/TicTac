@@ -194,7 +194,6 @@
             this.scoreToolStripMenuItem.Name = "scoreToolStripMenuItem";
             this.scoreToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.scoreToolStripMenuItem.Text = "Score";
-            this.scoreToolStripMenuItem.Click += new System.EventHandler(this.scoreToolStripMenuItem_Click);
             // 
             // hihgestScoreToolStripMenuItem
             // 
@@ -425,7 +424,6 @@
             this.panel4.Size = new System.Drawing.Size(286, 167);
             this.panel4.TabIndex = 8;
             this.panel4.Visible = false;
-            this.panel4.Paint += new System.Windows.Forms.PaintEventHandler(this.panel4_Paint);
             // 
             // groupBox1
             // 
@@ -511,7 +509,6 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Two Player - Network";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label6.Click += new System.EventHandler(this.label6_Click_1);
             // 
             // panel2
             // 
@@ -706,7 +703,6 @@
             this.highScore.Size = new System.Drawing.Size(222, 254);
             this.highScore.TabIndex = 23;
             this.highScore.Visible = false;
-            this.highScore.Paint += new System.Windows.Forms.PaintEventHandler(this.highScore_Paint);
             // 
             // BtnScoureClose
             // 

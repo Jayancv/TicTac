@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySQLClass;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -22,8 +21,7 @@ namespace Tic_Tac_Toe
         // Create a logger for use in this class
         private static log4net.ILog log = log4net.LogManager.GetLogger(typeof(Form1));
 
-        //hostname,database,username,password,port
-        MySQLClient sqlClient = new MySQLClient("localhost", "tic", "root", "root", 3306);
+        
 
         bool turn = true;                   //turn is true when x turn
         bool computer = true;               //play against computer when computer  true ; default game is single player
@@ -45,13 +43,15 @@ namespace Tic_Tac_Toe
         byte[] datalength = new byte[4];                           // creates a new byte with length 4 ( used for receivng data's lenght)
         //////////////
 
-
+        MySQLClient sqlClient = new MySQLClient();                  // for connect to data base
 
         //check
         public Form1()
         {
             //Initiate logging based on XML configuration
             log4net.Config.XmlConfigurator.Configure();
+
+
 
             InitializeComponent();
 
@@ -63,6 +63,7 @@ namespace Tic_Tac_Toe
             p1 = "Player 1";
             p2 = "Player 2";
             rServer.Checked = true;
+          
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -219,9 +220,9 @@ namespace Tic_Tac_Toe
 
                 if (computer && (winner == "O"))
                 {                       //if computer won (Single palyer)
-                    int defP = sqlClient.getScour("score", p, "defeat1");    //get pasr records
+                    int defP = sqlClient.getScour( p, "defeat1");    //get pasr records
                     defP = defP + 1;                                         //increment records
-                    sqlClient.Update(" score ", " defeat1=", defP, p);       //Update database
+                    sqlClient.Update( " defeat1=", defP, p);       //Update database
                     if (playerSet)                                           //if players already set then update score board
                     {
                         setScoreBoard(p);
@@ -231,6 +232,7 @@ namespace Tic_Tac_Toe
                         ComWon++;
                         setScoreBoard(p, ComWon, youWon);
                     }
+                    log.Info("Computer won the game !");
                     MessageBox.Show("Computer won the game !", "Winner");
                 }
                 else
@@ -238,9 +240,9 @@ namespace Tic_Tac_Toe
                     if (computer)                                            //check single player or not
                     {
                         //single player Playe1/You won
-                        int wonP = sqlClient.getScour("score", p, "won1");
+                        int wonP = sqlClient.getScour( p, "won1");
                         wonP = wonP + 1;
-                        sqlClient.Update("score", "won1=", wonP, p);
+                        sqlClient.Update( "won1=", wonP, p);
                         if (playerSet)
                         {
                             setScoreBoard(p);
@@ -251,7 +253,7 @@ namespace Tic_Tac_Toe
                             setScoreBoard(p, ComWon, youWon);
                         }
 
-
+                        log.Info(p + " won the game !");
                         MessageBox.Show(p + " won the game !", "Winner");
 
                     }
@@ -260,24 +262,24 @@ namespace Tic_Tac_Toe
 
                         if (winner == "X")
                         {
-                            int wonP1 = sqlClient.getScour("score", p1, "won2");
+                            int wonP1 = sqlClient.getScour( p1, "won2");
                             wonP1 = wonP1 + 1;
-                            sqlClient.Update("score", "won2=", wonP1, p1);
-                            int defP2 = sqlClient.getScour("score", p2, "defeat2");
+                            sqlClient.Update( "won2=", wonP1, p1);
+                            int defP2 = sqlClient.getScour( p2, "defeat2");
                             defP2 = defP2 + 1;
-                            sqlClient.Update("score", "defeat2=", defP2, p2);
-
+                            sqlClient.Update( "defeat2=", defP2, p2);
+                            log.Info(p1 + " won the game !");
                             MessageBox.Show(p1 + " won the game !", "Winner");
                         }
                         else
                         {
-                            int wonP2 = sqlClient.getScour("score", p2, "won2");
+                            int wonP2 = sqlClient.getScour( p2, "won2");
                             wonP2 = wonP2 + 1;
-                            sqlClient.Update("score", "won2=", wonP2, p2);
-                            int defP1 = sqlClient.getScour("score", p1, "defeat2");
+                            sqlClient.Update( "won2=", wonP2, p2);
+                            int defP1 = sqlClient.getScour(p1, "defeat2");
                             defP1 = defP1 + 1;
-                            sqlClient.Update("score", "defeat2=", defP1, p1);
-
+                            sqlClient.Update("defeat2=", defP1, p1);
+                            log.Info(p2 + " won the game !");
                             MessageBox.Show(p2 + " won the game !", "Winner");
                         }
                         setScoreBoard(p1, p2);
@@ -290,26 +292,28 @@ namespace Tic_Tac_Toe
                         {
                             if (!isClient)                    //player is server
                             {
-                                int wonP1 = sqlClient.getScour("score", p1, "won2");
+                                int wonP1 = sqlClient.getScour( p1, "won2");
                                 wonP1 = wonP1 + 1;
-                                sqlClient.Update("score", "won2=", wonP1, p1);
-                                int defP2 = sqlClient.getScour("score", p2, "defeat2");
+                                sqlClient.Update( "won2=", wonP1, p1);
+                                int defP2 = sqlClient.getScour( p2, "defeat2");
                                 defP2 = defP2 + 1;
-                                sqlClient.Update("score", "defeat2=", defP2, p2);
+                                sqlClient.Update( "defeat2=", defP2, p2);
                             }
+                            log.Info(p1 + " won the game !");
                             MessageBox.Show(p1 + " won the game !", "Winner");
                         }
                         else
                         {
                             if (isClient)                       //player is client
                             {
-                                int wonP2 = sqlClient.getScour("score", p2, "won2");
+                                int wonP2 = sqlClient.getScour( p2, "won2");
                                 wonP2 = wonP2 + 1;
-                                sqlClient.Update("score", "won2=", wonP2, p2);
-                                int defP1 = sqlClient.getScour("score", p1, "defeat2");
+                                sqlClient.Update( "won2=", wonP2, p2);
+                                int defP1 = sqlClient.getScour( p1, "defeat2");
                                 defP1 = defP1 + 1;
-                                sqlClient.Update("score", "defeat2=", defP1, p1);
+                                sqlClient.Update( "defeat2=", defP1, p1);
                             }
+                            log.Info(p2 + " won the game !");
                             MessageBox.Show(p2 + " won the game !", "Winner");
                         }
                         setScoreBoard(p1, p2);
@@ -325,19 +329,21 @@ namespace Tic_Tac_Toe
                 {                      //check turn Count, if it equals to 9 then game over & draw
                     if (computer)
                     {                       //Single player mode
-                        int drwP = sqlClient.getScour("score", p, "draw1");
+                        int drwP = sqlClient.getScour( p, "draw1");
                         drwP = drwP + 1;
-                        sqlClient.Update("score", "draw1=", drwP, p);
+                        sqlClient.Update( "draw1=", drwP, p);
+                       
                     }
                     else
                     {                                                       //multiplayer mode, change socres
-                        int drwP1 = sqlClient.getScour("score", p1, "draw2");
+                        int drwP1 = sqlClient.getScour( p1, "draw2");
                         drwP1 = drwP1 + 1;
-                        sqlClient.Update("score", "draw2=", drwP1, p1);
-                        int drwP2 = sqlClient.getScour("score", p2, "draw2");
+                        sqlClient.Update("draw2=", drwP1, p1);
+                        int drwP2 = sqlClient.getScour(p2, "draw2");
                         drwP2 = drwP2 + 1;
-                        sqlClient.Update("score", "draw2=", drwP2, p2);
+                        sqlClient.Update("draw2=", drwP2, p2);
                     }
+                    log.Info("game Over Draw!");
                     MessageBox.Show("game Over Draw!", "Loose");
 
                 }
@@ -347,7 +353,7 @@ namespace Tic_Tac_Toe
         //set score Board values for single player
         private void setScoreBoard(string name1)
         {
-            board = sqlClient.Get("score", name1);
+            board = sqlClient.Get( name1);
             p1Won.Text = board[0].ToString();
             p1Def.Text = board[2].ToString();
             p2Won.Text = board[2].ToString();
@@ -366,10 +372,10 @@ namespace Tic_Tac_Toe
         //set score board values for multiplayer 
         private void setScoreBoard(string name1, string name2)
         {
-            board = sqlClient.Get("score", name1);        //get player 1 scores and update score board
+            board = sqlClient.Get( name1);        //get player 1 scores and update score board
             p1Won.Text = board[1].ToString();
             p1Def.Text = board[3].ToString();
-            board = sqlClient.Get("score", name2);        //get player 1 scores and update score board
+            board = sqlClient.Get( name2);        //get player 1 scores and update score board
             p2Won.Text = board[1].ToString();
             p2Def.Text = board[3].ToString();
 
@@ -463,9 +469,75 @@ namespace Tic_Tac_Toe
             move.PerformClick();
         }
 
+        private Button look_for_win_or_block(string mark)
+        {
+           
+            //HORIZONTAL TESTS
+            if ((A1.Text == mark) && (A2.Text == mark) && (A3.Text == ""))
+                return A3;
+            if ((A2.Text == mark) && (A3.Text == mark) && (A1.Text == ""))
+                return A1;
+            if ((A1.Text == mark) && (A3.Text == mark) && (A2.Text == ""))
+                return A2;
+
+            if ((B1.Text == mark) && (B2.Text == mark) && (B3.Text == ""))
+                return B3;
+            if ((B2.Text == mark) && (B3.Text == mark) && (B1.Text == ""))
+                return B1;
+            if ((B1.Text == mark) && (B3.Text == mark) && (B2.Text == ""))
+                return B2;
+
+            if ((C1.Text == mark) && (C2.Text == mark) && (C3.Text == ""))
+                return C3;
+            if ((C2.Text == mark) && (C3.Text == mark) && (C1.Text == ""))
+                return C1;
+            if ((C1.Text == mark) && (C3.Text == mark) && (C2.Text == ""))
+                return C2;
+
+            //VERTICAL TESTS
+            if ((A1.Text == mark) && (B1.Text == mark) && (C1.Text == ""))
+                return C1;
+            if ((B1.Text == mark) && (C1.Text == mark) && (A1.Text == ""))
+                return A1;
+            if ((A1.Text == mark) && (C1.Text == mark) && (B1.Text == ""))
+                return B1;
+           
+
+            if ((A2.Text == mark) && (B2.Text == mark) && (C2.Text == ""))
+                return C2;
+            if ((B2.Text == mark) && (C2.Text == mark) && (A2.Text == ""))
+                return A2;
+            if ((A2.Text == mark) && (C2.Text == mark) && (B2.Text == ""))
+                return B2;
+
+            if ((A3.Text == mark) && (B3.Text == mark) && (C3.Text == ""))
+                return C3;
+            if ((B3.Text == mark) && (C3.Text == mark) && (A3.Text == ""))
+                return A3;
+            if ((A3.Text == mark) && (C3.Text == mark) && (B3.Text == ""))
+                return B3;
+
+            //DIAGONAL TESTS
+            if ((A1.Text == mark) && (B2.Text == mark) && (C3.Text == ""))
+                return C3;
+            if ((B2.Text == mark) && (C3.Text == mark) && (A1.Text == ""))
+                return A1;
+            if ((A1.Text == mark) && (C3.Text == mark) && (B2.Text == ""))
+                return B2;
+
+            if ((A3.Text == mark) && (B2.Text == mark) && (C1.Text == ""))
+                return C1;
+            if ((B2.Text == mark) && (C1.Text == mark) && (A3.Text == ""))
+                return A3;
+            if ((A3.Text == mark) && (C1.Text == mark) && (B2.Text == ""))
+                return B2;
+
+            return null;
+        }
+
         private Button look_for_open_space()
         {
-            Console.WriteLine("Looking for open space");
+          
             Button b = null;
             Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
             foreach (Button c in btns)
@@ -483,7 +555,7 @@ namespace Tic_Tac_Toe
 
         private Button look_for_corner()
         {
-            Console.WriteLine("Looking for corner");
+           
             if (A1.Text == "O")
             {
                 if (A3.Text == "")
@@ -536,71 +608,7 @@ namespace Tic_Tac_Toe
             return null;
         }
 
-        private Button look_for_win_or_block(string mark)
-        {
-            Console.WriteLine("Looking for win or block:  " + mark);
-            //HORIZONTAL TESTS
-            if ((A1.Text == mark) && (A2.Text == mark) && (A3.Text == ""))
-                return A3;
-            if ((A2.Text == mark) && (A3.Text == mark) && (A1.Text == ""))
-                return A1;
-            if ((A1.Text == mark) && (A3.Text == mark) && (A2.Text == ""))
-                return A2;
-
-            if ((B1.Text == mark) && (B2.Text == mark) && (B3.Text == ""))
-                return B3;
-            if ((B2.Text == mark) && (B3.Text == mark) && (B1.Text == ""))
-                return B1;
-            if ((B1.Text == mark) && (B3.Text == mark) && (B2.Text == ""))
-                return B2;
-
-            if ((C1.Text == mark) && (C2.Text == mark) && (C3.Text == ""))
-                return C3;
-            if ((C2.Text == mark) && (C3.Text == mark) && (C1.Text == ""))
-                return C1;
-            if ((C1.Text == mark) && (C3.Text == mark) && (C2.Text == ""))
-                return C2;
-
-            //VERTICAL TESTS
-            if ((A1.Text == mark) && (B1.Text == mark) && (C1.Text == ""))
-                return C1;
-            if ((B1.Text == mark) && (C1.Text == mark) && (A1.Text == ""))
-                return A1;
-            if ((A1.Text == mark) && (C1.Text == mark) && (B1.Text == ""))
-                return B1;
-            Console.WriteLine("skip ");
-
-            if ((A2.Text == mark) && (B2.Text == mark) && (C2.Text == ""))
-                return C2;
-            if ((B2.Text == mark) && (C2.Text == mark) && (A2.Text == ""))
-                return A2;
-            if ((A2.Text == mark) && (C2.Text == mark) && (B2.Text == ""))
-                return B2;
-
-            if ((A3.Text == mark) && (B3.Text == mark) && (C3.Text == ""))
-                return C3;
-            if ((B3.Text == mark) && (C3.Text == mark) && (A3.Text == ""))
-                return A3;
-            if ((A3.Text == mark) && (C3.Text == mark) && (B3.Text == ""))
-                return B3;
-
-            //DIAGONAL TESTS
-            if ((A1.Text == mark) && (B2.Text == mark) && (C3.Text == ""))
-                return C3;
-            if ((B2.Text == mark) && (C3.Text == mark) && (A1.Text == ""))
-                return A1;
-            if ((A1.Text == mark) && (C3.Text == mark) && (B2.Text == ""))
-                return B2;
-
-            if ((A3.Text == mark) && (B2.Text == mark) && (C1.Text == ""))
-                return C1;
-            if ((B2.Text == mark) && (C1.Text == mark) && (A3.Text == ""))
-                return A3;
-            if ((A3.Text == mark) && (C1.Text == mark) && (B2.Text == ""))
-                return B2;
-
-            return null;
-        }
+       
 
         private void check()
         {
@@ -614,11 +622,23 @@ namespace Tic_Tac_Toe
 
         private void newGame_Click(object sender, EventArgs e)
         {
+            
             newGame_ClickFuntion();
         }
 
         private void newGame_ClickFuntion()
         {
+            if (isNetwork && turnCount >0)                     //for update both sides
+            {
+                if (isClient)
+                {
+                    ClientSend("X0");
+                }
+                else
+                {
+                    ServerSend("X0");
+                }
+            }
             turn = true;
             turnCount = 0;
             Button[] btns = new Button[9] { A1, A2, A3, B1, B2, B3, C1, C2, C3 };
@@ -673,15 +693,15 @@ namespace Tic_Tac_Toe
             {
                 p1 = player1.Text;
                 p2 = player2.Text;
-                bool exist1 = sqlClient.Exist("score", p1);
-                bool exist2 = sqlClient.Exist("score", p2);
+                bool exist1 = sqlClient.Exist( p1);
+                bool exist2 = sqlClient.Exist( p2);
                 if (!exist1)
                 {                                   //if player 1 not exist in database then insert to database
-                    sqlClient.Insert("score", "name", p1);
+                    sqlClient.Insert( "name", p1);
                 }
                 if (!exist2)
                 {                                    //if player 2 not exist in database then insert to database
-                    sqlClient.Insert("score", "name", p2);
+                    sqlClient.Insert( "name", p2);
                 }
                 panel1.Visible = false;
                 playerSet = true;
@@ -700,11 +720,11 @@ namespace Tic_Tac_Toe
             else
             {
                 p = singlePlayer.Text;
-                bool exist = sqlClient.Exist("score", p);
+                bool exist = sqlClient.Exist( p);
 
                 if (!exist)
                 {                   //if player 1 not exist in database then insert to database
-                    sqlClient.Insert("score", "name", p);
+                    sqlClient.Insert( "name", p);
                 }
                 panel2.Visible = false;
                 playerSet = true;
@@ -723,11 +743,6 @@ namespace Tic_Tac_Toe
         {
             panel1.Visible = false;
             btnEnable(true);
-        }
-
-        private void scoreToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void fontDialog1_Apply(object sender, EventArgs e)
@@ -761,20 +776,8 @@ namespace Tic_Tac_Toe
             panel1.Visible = true;
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
+   
 
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void button2_Click(object sender, EventArgs e) // networking cancel
         {
@@ -796,10 +799,10 @@ namespace Tic_Tac_Toe
                     turn = true;
                     isClient = false;
                     p1 = TxtNetName.Text;
-                    bool exist1 = sqlClient.Exist("score", p1);
+                    bool exist1 = sqlClient.Exist( p1);
                     if (!exist1)
                     {                                   //if player 1 not exist in database then insert to database
-                        sqlClient.Insert("score", "name", p1);
+                        sqlClient.Insert( "name", p1);
                     }
                     newGame_ClickFuntion();
                     btnListen_Click(sender, e);
@@ -810,10 +813,10 @@ namespace Tic_Tac_Toe
                     turn = false;
                     isClient = true;
                     playerSet = true;
-                    bool exist1 = sqlClient.Exist("score", p1);
+                    bool exist1 = sqlClient.Exist( p1);
                     if (!exist1)
                     {                                   //if player 1 not exist in database then insert to database
-                        sqlClient.Insert("score", "name", p1);
+                        sqlClient.Insert( "name", p1);
                     }
                     p2 = TxtNetName.Text;
                     clientConect();
@@ -826,9 +829,15 @@ namespace Tic_Tac_Toe
         // create server
         private void btnListen_Click(object sender, EventArgs e)
         {
-
+            try {
             server.Start();                         // Starts Listening to Any IPAddress trying to connect to the program with port 1980
-            MessageBox.Show("Waiting For Connection");
+            }catch(Exception en){
+                MessageBox.Show("Server already started ! Error :  "+en);
+                panel4.Visible = true;
+                return;
+            
+            }
+                MessageBox.Show("Waiting For Connection");
             new Thread(() =>                       // Creates a New Thread 
             {
                 client = server.AcceptTcpClient(); //Waits for the Client To Connect
@@ -879,9 +888,15 @@ namespace Tic_Tac_Toe
                             }
                             if (!isBtn)
                             {
+                                if (btnTxt == "X0")
+                                {
+                                    newGame_ClickFuntion();
+                                }
+                                else { 
                                 p2 = btnTxt;
                                 ServerSend(p1);
                                 newGame_ClickFuntion();
+                                }
                             }
 
                         });
@@ -961,8 +976,14 @@ namespace Tic_Tac_Toe
                                 catch { }
                             } if (!isBtn)
                             {
+                                if (btntxt == "X0")
+                                {
+                                    newGame_ClickFuntion();
+                                }
+                                else { 
                                 p1 = btntxt;
                                 newGame_ClickFuntion();
+                                }
                             }
 
                         });
@@ -987,26 +1008,17 @@ namespace Tic_Tac_Toe
 
 
 
-
-
-
-
         private void modeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             newGame_Click(sender, e);
-        }
-
-        private void label15_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void hihgestScoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string[] array1 = new string[2];
             string[] array2 = new string[2];
-            array1 = sqlClient.Max("score", "won1");
-            array2 = sqlClient.Max("score", "won2");
+            array1 = sqlClient.Max( "won1");
+            array2 = sqlClient.Max( "won2");
             labSinName.Text = array1[0];
             labSinScore.Text = array1[1];
             labMulName.Text = array2[0];
@@ -1016,30 +1028,10 @@ namespace Tic_Tac_Toe
 
         }
 
-        private void highScore_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void BtnScoureClose_Click(object sender, EventArgs e)
         {
             highScore.Visible = false;
             // btnEnable(true);
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void label13_Click(object sender, EventArgs e)

@@ -42,6 +42,11 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="MySql.Data" version="6.9.6.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="log4net.dll" size="299520">
       <assemblyIdentity name="log4net" version="1.2.13.0" publicKeyToken="669E0DDF0BB1AA2A" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -90,18 +95,6 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="391873">
-      <assemblyIdentity name="MySql.Data" version="6.6.5.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>7ikHExOJZzudKLzy+S1MQiqbyHSkcsCjJ1mw6JoxCtc=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Tic Tac Toe.exe" size="43520">
       <assemblyIdentity name="Tic Tac Toe" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -109,17 +102,17 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>TSa/R9uOaoijk+D3C1NcCvZOeuG8NEVXY+ocuNtPGp0=</dsig:DigestValue>
+        <dsig:DigestValue>xz42Xkk+LoQm0T+F7fKfIYhT1CFGQm2lhlFrO9gvEEU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Tic Tac Toe.exe.config" size="1446">
+  <file name="Tic Tac Toe.exe.config" size="1455">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>C8vDHk+KSyQYNH6EelZWGw+6WBuq7/TMLfepDPLcsdU=</dsig:DigestValue>
+      <dsig:DigestValue>ewskp64Jyd+UsBu/z+V599SCR5Q1reO1q6OT4hwnbEM=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
